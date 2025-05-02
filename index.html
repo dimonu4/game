@@ -27,10 +27,10 @@ canvas {
 			x += dx;
 			y += dy;
 			if( x + dx > canvas.width || x + dx < 0 ){
-				x = -dx;
+				dx = -dx;
 			}
 		        if( y + dy > canvas.height || y + dy < 0 ){
-				  y = -dy
+				dy = -dy
 			}
 		  }
 
@@ -43,7 +43,7 @@ canvas {
 
 		  }
 		  
-		 		  setInterval(draw, 100);
+		 		  setInterval(draw, 10);
 	  </script>
 	</body>
 </html>
