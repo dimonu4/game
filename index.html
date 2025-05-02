@@ -16,23 +16,15 @@ canvas {
 		  const canvas = document.getElementById('myCanvas');
 		  const ctx = canvas.getContext('2d');
 		  
-		  ctx.beginPath();
-		  ctx.rect(20,40,30,30);
-		  ctx.fill();
-		  ctx.closePath();
+		  function draw(){
+			ctx.beginPath();
+			ctx.arc( 50,50,10,0, Math.PI*2 )
+			ctx.fillStyle = '#0095DD';
+			ctx.fill();
+			ctx.closePath();
+		  }
 
-		  ctx.beginPath();
-		  ctx.arc(80,60,35,0,Math.PI*2,false);
-		  ctx.fillStyle= "rgb(0 0 255/0.5)";
-		  ctx.fill();
-		  ctx.closePath();
-
-		  ctx.beginPath();
-		  ctx.rect(150,150,50,50);
-		  ctx.strokeStyle = 'green';
-		  ctx.stroke();
-		  ctx.closePath();
-
+		  setInterval(draw, 100);
 	  </script>
 	</body>
 </html>
