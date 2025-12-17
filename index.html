@@ -7,12 +7,24 @@
 canvas {
 	background: whitesmoke;
 }
+.button{
+	width:300px;
+	height:100px;
+}
 </style>
 	</head>
 	<body>
-          <h1>Hi there</h1>
+          <h1>Hi there Loshara</h1>
+	  <p id="console">Console</p>
 	  <canvas id='myCanvas' width='480' height='320'></canvas>
+	  <!-- Controll buttons: -->
+	  <div class="controlButtons">
+		  <button class="button leftButton">left</button>
+  <button class="button rightButton">rigth</button>
+
 	  <script>
+		  const leftButton = document.querySelector(".leftButton");
+		  const rightButton = document.querySelector(".rightButton");
 		  const canvas = document.getElementById('myCanvas');
 		  const ctx = canvas.getContext('2d');
 		  const ballRadius = 10;
@@ -25,6 +37,7 @@ canvas {
 		  let paddleX = ( canvas.width - paddleWidth ) / 2 ;
 		  let leftPressed = false;
 		  let rightPressed = false;
+		  let console = document.getElementById('console');
 
 		  function draw(){
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -64,8 +77,31 @@ canvas {
 		  }
 		  
 		  setInterval(draw, 10);
+		  console.innerText= "working...";
+		  // Event
+		  leftButton.addEventListener('touchstart', leftButtonHandlerStart);	
+		  leftButton.addEventListener('touchend', leftButtonHandlerEnd);
+		  rightButton.addEventListener('touchstart', rightButtonHandlerStart);	
+		  rightButton.addEventListener('touchend', rightButtonHandlerEnd);
+
+
+
 		  document.addEventListener('keydown', keyDownHandler, false);
 		  document.addEventListener('keyup', keyUpHandler, false);
+// Event handlers:
+		  function leftButtonHandlerStart(){
+			  
+ 			leftPressed = true;	
+		  }
+		  function leftButtonHandlerEnd(){
+ 			leftPressed = false;
+		  }
+		   function rightButtonHandlerStart(){
+ 	 		rightPressed = true;	
+		  }
+		  function rightButtonHandlerEnd(){
+ 		        rightPressed = false;	
+		  }
 
 		  function keyDownHandler(e){
 			  if(e.key === 'Right' || e.key === 'ArrowRight'){
