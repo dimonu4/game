@@ -1,123 +1,134 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset='utf-8' />
-		<title>Test game</title>
-<style>
-canvas {
-	background: whitesmoke;
-}
-.button{
+  <head>
+    <meta charset='utf-8' />
+    <title>Test game</title>
+    <style>
+      canvas {
+        background: whitesmoke;
+      }
+      .button{
 	width:300px;
 	height:100px;
-}
-</style>
-	</head>
-	<body>
-          <h1>Hi there Loshara</h1>
-	  <p id="console">Console</p>
-	  <canvas id='myCanvas' width='480' height='320'></canvas>
-	  <!-- Controll buttons: -->
-	  <div class="controlButtons">
-		  <button class="button leftButton">left</button>
-  <button class="button rightButton">rigth</button>
-
-	  <script>
-		  const leftButton = document.querySelector(".leftButton");
-		  const rightButton = document.querySelector(".rightButton");
-		  const canvas = document.getElementById('myCanvas');
-		  const ctx = canvas.getContext('2d');
-		  const ballRadius = 10;
-		  let x = canvas.width / 2;
-		  let y = canvas.height - 30;
-		  let dx = 2;
-		  let dy = -2;
-		  let paddleHeight = 10;
-		  let paddleWidth = 75;
-		  let paddleX = ( canvas.width - paddleWidth ) / 2 ;
-		  let leftPressed = false;
-		  let rightPressed = false;
-		  let console = document.getElementById('console');
-
-		  function draw(){
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			drawBall();
-			drawPaddle();
-			x += dx;
-			y += dy;
-			if( x + dx > canvas.width - ballRadius || x + dx < ballRadius){
-				dx = -dx;
-			}
-		        if( y + dy > canvas.height - ballRadius || y + dy < ballRadius ){
-				dy = -dy
-			}
-			if( leftPressed ){
-			        paddleX = Math.max( paddleX - 7, 0);
-			  }
-			if( rightPressed ){
-			        paddleX = Math.min( paddleX + 7, canvas.width - paddleWidth);
-			  }
-		  }
-
-		  function drawBall(){
-	                ctx.beginPath();
-			ctx.arc( x, y, ballRadius, 0, Math.PI*2 )
-			ctx.fillStyle = '#0095DD';
-			ctx.fill();
-			ctx.closePath();
-
-		  }
-
-		  function drawPaddle(){
-			  ctx.beginPath();
-			  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-			  ctx.fillStyle = '#0095DD';
-			  ctx.fill();
-			  ctx.closePath();
-		  }
-		  
-		  setInterval(draw, 10);
-		  console.innerText= "working...";
-		  // Event
-		  leftButton.addEventListener('touchstart', leftButtonHandlerStart);	
-		  leftButton.addEventListener('touchend', leftButtonHandlerEnd);
-		  rightButton.addEventListener('touchstart', rightButtonHandlerStart);	
-		  rightButton.addEventListener('touchend', rightButtonHandlerEnd);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hi there Loshara</h1>
+    <button id= 'runButton'>Start game</button>
+    <p id="console">Console</p>
+    <canvas id='myCanvas' width='480' height='320'></canvas>
+    <!-- Controll buttons: -->
+    <div class="controlButtons">
+    <button class="button leftButton">left</button>
+    <button class="button rightButton">rigth</button>
+    <script>
+      const leftButton = document.querySelector(".leftButton");
+      const rightButton = document.querySelector(".rightButton");
+      const canvas = document.getElementById('myCanvas');
+      const ctx = canvas.getContext('2d');
+      const ballRadius = 10;
+      let x = canvas.width / 2;
+      let y = canvas.height - 30;
+      let dx = 2;
+      let dy = -2;
+      let paddleHeight = 10;
+      let paddleWidth = 75;
+      let paddleX = ( canvas.width - paddleWidth ) / 2 ;
+      let leftPressed = false;
+      let rightPressed = false;
+      let console = document.getElementById('console');
+      let runButton = document.getElementById('runButton');
+      let interval = 0;
+      const brickRowCount = 3;
+      const brickColumnCount = 5;
+      const brickWidth = 75;
+      const brickHeight 20;
 
 
-
-		  document.addEventListener('keydown', keyDownHandler, false);
-		  document.addEventListener('keyup', keyUpHandler, false);
+      function draw(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+	drawBall();
+	drawPaddle();
+	x += dx;
+	y += dy;
+	if( x + dx > canvas.width - ballRadius || x + dx < ballRadius){
+	  dx = -dx;
+	}
+	if( y + dy < ballRadius ){
+	  dy = -dy
+	} else if( y + dy > canvas.height - ballRadius ){
+	    if( x > paddleX && x < paddleX + paddleWidth ){
+	      dy = -dy;
+	    } else {
+              alert("Game over");
+	      document.location.reload();
+	      clearInterval(interval);
+	    }
+	}
+	if( leftPressed ){
+	  paddleX = Math.max( paddleX - 7, 0);
+	}
+	if( rightPressed ){
+	  paddleX = Math.min( paddleX + 7, canvas.width - paddleWidth);
+	}
+      }
+      function drawBall(){
+        ctx.beginPath();
+	ctx.arc( x, y, ballRadius, 0, Math.PI*2 )
+	ctx.fillStyle = '#0095DD';
+	ctx.fill();
+	ctx.closePath();
+      }
+      function drawPaddle(){
+        ctx.beginPath();
+        ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+        ctx.fillStyle = '#0095DD';
+        ctx.fill();
+        ctx.closePath();
+      } 
+      function startGame(){
+        interval = setInterval(draw, 10);
+        console.innerText= "working...";
+      }
+// Events
+      leftButton.addEventListener('touchstart', leftButtonHandlerStart);
+      leftButton.addEventListener('touchend', leftButtonHandlerEnd);
+      rightButton.addEventListener('touchstart', rightButtonHandlerStart);
+      rightButton.addEventListener('touchend', rightButtonHandlerEnd);
+      runButton.addEventListener('click', ()=>{
+        startGame();
+        runButton.disabled = true;
+      })
+      document.addEventListener('keydown', keyDownHandler, false);
+      document.addEventListener('keyup', keyUpHandler, false);
 // Event handlers:
-		  function leftButtonHandlerStart(){
-			  
- 			leftPressed = true;	
-		  }
-		  function leftButtonHandlerEnd(){
- 			leftPressed = false;
-		  }
-		   function rightButtonHandlerStart(){
- 	 		rightPressed = true;	
-		  }
-		  function rightButtonHandlerEnd(){
- 		        rightPressed = false;	
-		  }
-
-		  function keyDownHandler(e){
-			  if(e.key === 'Right' || e.key === 'ArrowRight'){
-				  rightPressed = true;
-			  } else if(e.key === 'Left' || e.key === 'ArrowLeft'){
-				  leftPressed = true;
-			  }
-		  }
-
-		  function keyUpHandler(e){
-			  if(e.key === 'Right' || e.key === 'ArrowRight'){
-				  rightPressed = false;
-			  } else if(e.key === 'Left' || e.key === 'ArrowLeft'){
-				  leftPressed = false;
-			  }
-		  }
-	  </script>
-	</body>
+      function leftButtonHandlerStart(){ 
+	leftPressed = true;	
+      }
+      function leftButtonHandlerEnd(){
+ 	leftPressed = false;
+      }
+      function rightButtonHandlerStart(){
+ 	rightPressed = true;	
+      }
+      function rightButtonHandlerEnd(){
+        rightPressed = false;	
+      }
+      function keyDownHandler(e){
+        if(e.key === 'Right' || e.key === 'ArrowRight'){
+	  rightPressed = true;
+        } else if(e.key === 'Left' || e.key === 'ArrowLeft'){
+	  leftPressed = true;
+	  }
+      }
+      function keyUpHandler(e){
+        if(e.key === 'Right' || e.key === 'ArrowRight'){
+        rightPressed = false;
+        } else if(e.key === 'Left' || e.key === 'ArrowLeft'){
+          leftPressed = false;
+	  }
+      }
+    </script>
+  </body>
 </html>
