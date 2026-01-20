@@ -163,6 +163,7 @@
       })
       document.addEventListener('keydown', keyDownHandler, false);
       document.addEventListener('keyup', keyUpHandler, false);
+      document.addEventListener('mousemove', mouseHandler);
 // Event handlers:
       function leftButtonHandlerStart(){ 
 	leftPressed = true;	
@@ -189,6 +190,9 @@
         } else if(e.key === 'Left' || e.key === 'ArrowLeft'){
           leftPressed = false;
 	  }
+      }
+      function mouseHandler() {
+	const relativeX = e.clientX - canvas.offsetLeft;
       }
     </script>
   </body>
