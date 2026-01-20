@@ -191,8 +191,11 @@
           leftPressed = false;
 	  }
       }
-      function mouseHandler() {
+      function mouseHandler(e) {
 	const relativeX = e.clientX - canvas.offsetLeft;
+	if (relativeX > 0 && relativeX < canvas.width) {
+	  paddleX = relativeX - paddleWidth / 2;
+	}
       }
     </script>
   </body>
