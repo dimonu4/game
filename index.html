@@ -16,6 +16,20 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       const elementSize = canvas.width / 10 ;
+      
+      function drawEl (x, y){
+	ctx.beginPath();
+        ctx.fillRect(x, y, elementSize, elementSize);
+        ctx.clearRect(x + elementSize / 3, y + elementSize /3, elementSize / 3,  elementSize / 3);
+	ctx.closePath();
+      }
+
+      function drawElSquare() {
+	ctx.beginPath();
+	drawEl (0,0);
+	ctx.closePath();
+      }
+      drawElSquare();
     </script>
   </body>
 </html>
