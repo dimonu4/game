@@ -16,7 +16,7 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       const elementSize = canvas.width / 10 ;
-      const square = [[1, 1], [1, 1]];
+      const square = [[0, 1], [1, 1]];
       
       function drawEl (x, y){
 	ctx.beginPath();
@@ -27,16 +27,22 @@
 
       function drawFigure( figure ) {
 	ctx.clearRect(0,0,canvas.widht, canvas.height);
-	let x = canvas.width / 2 - elementSize;
+	let initX = canvas.width / 2 - elementSize;
 	let y = 0;
-        for( let i = 0; i < 2; i++ ){
-          for( let j = 0; j < 2; j++){
-            drawEl(x + elementSize * i, y + elementSize * j);
+        for( let i = 0; i < square.length; i++ ){
+          let x = initX;
+          for( let pixel in square[i]){
+            if (parseInt(pixel)) {
+		    console.log(pixel);
+              drawEl(x, y);
 	    }
+            x += elementSize;
+	  }
+        y += elementSize;
         }
       }
 
-      drawFigure( sqaure );
+      drawFigure( square );
     </script>
   </body>
 </html>
