@@ -16,8 +16,43 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       const elementSize = canvas.width / 10 ;
-      const square = [[0, 1], [1, 1]];
+      const screenGrid = [];
+      const square = [[1, 0,1], [0, 1]];
+
       
+      
+      function screenGridDefine(){
+        const columnNumber = 10;
+	const stringNumber = 15;
+	for (let i = 0; i < stringNumber; i++){
+	  screenGrid.push([]);
+          for (let j = 0; j < columnNumber; j++){
+            screenGrid[i].push(0);
+          }
+        }
+      }
+
+      function drawField(){
+	let xInit = 0;
+	let yInit = 0;
+	let out = '';
+        for(let string of screenGrid){
+	  xInit = 0;
+	  out = '';
+	  for(let column of string){
+            if( parseInt(column ) ){
+	      out += '*';
+	      drawEl(xInit, yInit);
+	    } else { out += '-';}
+            xInit += elementSize;
+	  }
+          yInit += elementSize;
+          console.log(out);
+	}
+      }
+      screenGridDefine();
+      drawField();
+
       function drawEl (x, y){
 	ctx.beginPath();
         ctx.fillRect(x, y, elementSize, elementSize);
@@ -29,11 +64,12 @@
 	ctx.clearRect(0,0,canvas.widht, canvas.height);
 	let initX = canvas.width / 2 - elementSize;
 	let y = 0;
+	     let test = 0;
         for( let i = 0; i < square.length; i++ ){
           let x = initX;
-          for( let pixel in square[i]){
+          for( let pixel of square[i]){
             if (parseInt(pixel)) {
-		    console.log(pixel);
+		    console.log(test++);
               drawEl(x, y);
 	    }
             x += elementSize;
