@@ -20,8 +20,8 @@
       const square = [[1, 0,1], [0, 1]];
 
       
-      
-      function screenGridDefine(){
+      //Create matrix for field
+      function screenGridDefine(){ 
         const columnNumber = 10;
 	const stringNumber = 15;
 	for (let i = 0; i < stringNumber; i++){
@@ -53,6 +53,7 @@
       screenGridDefine();
       drawField();
 
+      //Drawing one pixel
       function drawEl (x, y){
 	ctx.beginPath();
         ctx.fillRect(x, y, elementSize, elementSize);
