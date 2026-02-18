@@ -11,14 +11,20 @@
   <body>
     <h1>Tetris game</h1>
     <canvas id = 'canvas' width = '300px' height = '450px'>
-    </canvas>`
+    </canvas>
     <script>
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       const elementSize = canvas.width / 10 ;
       const screenGrid = [];
-      const square = [[1, 0,1], [0, 1]];
-
+      const square = [[1, 1], [1, 1]];
+      //PixelProps object
+      const PixelProps = {
+	x : 0,
+        y : 0,
+        isFill: true,
+	figure: '',
+      }           
       
       //Create matrix for field
       function screenGridDefine(){ 
@@ -27,31 +33,26 @@
 	for (let i = 0; i < stringNumber; i++){
 	  screenGrid.push([]);
           for (let j = 0; j < columnNumber; j++){
-            screenGrid[i].push(0);
+	    PixelProps.x = i
+            screenGrid[i].push(PixelProps);
           }
         }
       }
-
+      console.log(screenGrid);
+      //Draw all field
       function drawField(){
 	let xInit = 0;
 	let yInit = 0;
-	let out = '';
         for(let string of screenGrid){
-	  xInit = 0;
-	  out = '';
 	  for(let column of string){
-            if( parseInt(column ) ){
-	      out += '*';
-	      drawEl(xInit, yInit);
-	    } else { out += '-';}
-            xInit += elementSize;
+            if( column.PixelProps.isFill ){
+	      drawEl(column.PixelProps.x, column.PixelProps.y);
+	    }
 	  }
-          yInit += elementSize;
-          console.log(out);
 	}
       }
       screenGridDefine();
-      drawField();
+   //   drawField();
 
       //Drawing one pixel
       function drawEl (x, y){
@@ -60,7 +61,7 @@
         ctx.clearRect(x + elementSize / 3, y + elementSize /3, elementSize / 3,  elementSize / 3);
 	ctx.closePath();
       }
-
+      //draw figure by array
       function drawFigure( figure ) {
 	ctx.clearRect(0,0,canvas.widht, canvas.height);
 	let initX = canvas.width / 2 - elementSize;
@@ -79,7 +80,7 @@
         }
       }
 
-      drawFigure( square );
+     // drawFigure( square );
     </script>
   </body>
 </html>
