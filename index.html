@@ -18,13 +18,13 @@
       const elementSize = canvas.width / 10 ;
       const screenGrid = [];
       const square = [[1, 1], [1, 1]];
+
       //PixelProps object
       const PixelProps = {
 	x : 0,
         y : 0,
-        isFill: true,
-	figure: '',
-	canMove: true,
+        isFill: false,
+	underControl: false,
 	isAnchored: false,
       }           
       
@@ -35,8 +35,10 @@
 	for (let i = 0; i < stringNumber; i++){
 	  screenGrid.push([]);
           for (let j = 0; j < columnNumber; j++){
-	    PixelProps.x = i
-            screenGrid[i].push(PixelProps);
+	    let clonePixel = Object.assign({}, PixelProps)
+	    clonePixel.x = i * elementSize
+	    clonePixel.y = j * elementSize
+            screenGrid[i].push(clonePixel);
           }
         }
       }
