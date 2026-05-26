@@ -17,7 +17,7 @@
       const ctx = canvas.getContext('2d');
       const elementSize = canvas.width / 10 ;
       const screenGrid = [];
-      const square = [[1, 1], [1, 1]];
+      let gameStatus;
 
       //PixelProps object
       const PixelProps = {
@@ -36,8 +36,8 @@
 	  screenGrid.push([]);
           for (let j = 0; j < columnNumber; j++){
 	    let clonePixel = Object.assign({}, PixelProps)
-	    clonePixel.x = i * elementSize
-	    clonePixel.y = j * elementSize
+	    clonePixel.x = j * elementSize
+	    clonePixel.y = i * elementSize
             screenGrid[i].push(clonePixel);
           }
         }
@@ -48,16 +48,12 @@
 	let yInit = 0;
         for(let string of screenGrid){
 	  for(let column of string){
-            if( column.PixelProps.isFill ){
-	      drawEl(column.PixelProps.x, column.PixelProps.y);
+	      if( column["isFill"] ){
+		drawEl(column["x"], column["y"]);
 	    }
 	  }
 	}
       }
-      screenGridDefine();
-
-      console.log(screenGrid);
-   //   drawField();
 
       //Drawing one pixel
       function drawEl (x, y){
@@ -66,26 +62,18 @@
         ctx.clearRect(x + elementSize / 3, y + elementSize /3, elementSize / 3,  elementSize / 3);
 	ctx.closePath();
       }
-      //draw figure by array
-      function drawFigure( figure ) {
+      // tic of game
+      function gameTic( ) {
 	ctx.clearRect(0,0,canvas.widht, canvas.height);
-	let initX = canvas.width / 2 - elementSize;
-	let y = 0;
-	     let test = 0;
-        for( let i = 0; i < square.length; i++ ){
-          let x = initX;
-          for( let pixel of square[i]){
-            if (parseInt(pixel)) {
-		    console.log(test++);
-              drawEl(x, y);
-	    }
-            x += elementSize;
-	  }
-        y += elementSize;
-        }
+        drawField();
+	      console.log('tic');
       }
-
-     // drawFigure( square );
+      // start of game
+      function startGame(){
+        screenGridDefine();
+	gameStatus = setInterval( gameTic, 1000);
+      }
+      startGame();
     </script>
   </body>
 </html>
