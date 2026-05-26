@@ -17,8 +17,8 @@
       const ctx = canvas.getContext('2d');
       const elementSize = canvas.width / 10 ;
       const screenGrid = [];
-      let gameStatus;
-
+      let timerId;
+      let isFigure = false;
       //PixelProps object
       const PixelProps = {
 	x : 0,
@@ -44,11 +44,12 @@
       }
       //Draw all field
       function drawField(){
+	ctx.clearRect(0,0,canvas.widht, canvas.height);
 	let xInit = 0;
 	let yInit = 0;
-        for(let string of screenGrid){
-	  for(let column of string){
-	      if( column["isFill"] ){
+        for(let row of screenGrid){
+	  for(let pixel of row){
+	      if( pixel["isFill"] ){
 		drawEl(column["x"], column["y"]);
 	    }
 	  }
@@ -62,16 +63,25 @@
         ctx.clearRect(x + elementSize / 3, y + elementSize /3, elementSize / 3,  elementSize / 3);
 	ctx.closePath();
       }
+      // creating Figure
+      function addFigure(){
+	
+	console.log('figure added');
+	isFigure = true;
+      }
       // tic of game
       function gameTic( ) {
-	ctx.clearRect(0,0,canvas.widht, canvas.height);
+        if( !isFigure ) {
+	  addFigure()
+	}
         drawField();
-	      console.log('tic');
+	console.log('tic');
       }
       // start of game
       function startGame(){
         screenGridDefine();
-	gameStatus = setInterval( gameTic, 1000);
+	timerId = setInterval( gameTic, 1000);
+	
       }
       startGame();
     </script>
