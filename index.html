@@ -60,21 +60,24 @@
         ctx.clearRect(x + elementSize / 3, y + elementSize /3, elementSize / 3,  elementSize / 3);
 	ctx.closePath();
       }
+      // fill picture by coordinates
+      function fillPixel(xFill, yFill){
+        const pixel = screenGrid.find( pix => pix.x == xFill && pix.y == yFill;
+	pixel.isFill = true;
+      }
       // creating Figure
       function addFigure(){
         const figures = {dot: [ [1] ], cube: [ [1, 1],[1, 1] ] }
 	const figure = figures.dot;
 	const xInit = 120;
 	const yInit = 0;
-	const initPixel = screenGrid.find( pixel => pixel.x == xInit && pixel.y == yInit )
 	
         for (let i =0; i < figure.length; i++){
 	  for (let j=0; j< figure[i].length; j++){
 		  console.log("hi")
 	  }
 	}
-	initPixel.isFill = true;
-	    
+	fillPixel(xInit, yInit);   
 	console.log('figure added');
 	isFigure = true;
       }
