@@ -33,12 +33,11 @@
         const columnNumber = 10;
 	const stringNumber = 15;
 	for (let i = 0; i < stringNumber; i++){
-	  screenGrid.push([]);
           for (let j = 0; j < columnNumber; j++){
 	    let clonePixel = Object.assign({}, PixelProps)
 	    clonePixel.x = j * elementSize
 	    clonePixel.y = i * elementSize
-            screenGrid[i].push(clonePixel);
+            screenGrid.push(clonePixel);
           }
         }
       }
@@ -65,7 +64,19 @@
       }
       // creating Figure
       function addFigure(){
+        const figures = {dot: [ [1] ], cube: [ [1, 1],[1, 1] ] }
+	const figure = figures.dot;
+	const xInit = 75;
+	const yInit = 0;
+	const initPixel = screenGrid.find( pixel => pixel.x == xInit && pixel.y == yInit )
 	
+        for i =0; i < figure.length; i++{
+	  for j=0; j< figure[i].length; j++{
+		  console.log("hi")
+	  }
+	}
+	initPixel.isFill = true;
+	    
 	console.log('figure added');
 	isFigure = true;
       }
