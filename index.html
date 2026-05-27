@@ -71,11 +71,18 @@
 	const figure = figures.dot;
 	const xInit = 120;
 	const yInit = 0;
+	let x = xInit;
+	let y = yInit;
 	
-        for (let i =0; i < figure.length; i++){
+        for (let i = 0; i < figure.length; i++){
 	  for (let j=0; j< figure[i].length; j++){
-		  console.log("hi")
+	    if( figure[i][j] ){
+	      fillPixel(x, y)
+	    }
+	    x += elementSize;
 	  }
+          y += elementSize;
+	  x = xInit;
 	}
 	fillPixel(xInit, yInit);   
 	console.log('figure added');
