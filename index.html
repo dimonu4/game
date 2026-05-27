@@ -19,6 +19,7 @@
       const screenGrid = [];
       let timerId;
       let isFigure = false;
+      let timer = 0;
       //PixelProps object
       const PixelProps = {
 	x : 0,
@@ -84,23 +85,28 @@
           y += elementSize;
 	  x = xInit;
 	}
-	fillPixel(xInit, yInit);   
 	console.log('figure added');
 	isFigure = true;
+      }
+      function makeFallDown(){
+	console.log("figere succesfuly dawn"
       }
       // tic of game
       function gameTic( ) {
         if( !isFigure ) {
 	  addFigure()
 	}
+        if( timer > 0 ){
+	  makeFallDown();
+	}
         drawField();
+	timer ++;
 	console.log('tic');
       }
       // start of game
       function startGame(){
         screenGridDefine();
 	timerId = setInterval( gameTic, 1000);
-	
       }
       startGame();
     </script>
