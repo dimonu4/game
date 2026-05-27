@@ -88,8 +88,49 @@
 	console.log('figure added');
 	isFigure = true;
       }
+      //return next pixel
+      function giveNextPixel(pixel, direction){
+	return screenGrid.find( pix => pix.y == pixel.y + elementSize && pix.x == pixel.x)
+      }
+      //Checking if figure can move to direction
+      function checkFigureAbilityMove(pixels, direction){
+	let result 
+	pixels.forEach( pixel => {
+          const nextPixel = giveNextPixel(pixel);
+	  if(nextPixel === undefined || nextPixel.isAnchored === true ){
+		  console.log('i am before return')
+            result =  false;
+		  console.log('i am after return')
+          }
+	})
+	return true;
+      }
+      //Move to direction
+      function moveToDirection(pixels, direction){
+          pixels.forEach(pixel =>{ 
+	    const nextPixel = giveNextPixel(pixel);
+	    nextPixel.isFill = true;
+	    pixel.isFill = false;
+	  })
+      }
+      //Anchor figure and set isFigure to false
+      function anchorFigure(pixels){
+        pixels.forEach(pixel => {
+	  pixel.isAnchored === true
+	})
+	isFigure = false;
+      }
       function makeFallDown(){
-	console.log("figere succesfuly dawn"
+	const pixelsForMoving = screenGrid.filter((pixel)=> pixel.isFill === true && pixel.isAnchored === false);
+	const canFigureMove = checkFigureAbilityMove(pixelsForMoving, 'down');
+	console.log(canFigureMove)
+        if( canFigureMove ){
+	  moveToDirection(pixelsForMoving, 'down');
+	  console.log("figere succesfuly dawn")
+	} else {
+           anchorFigure(pixelsForMoving);
+	   console.log('figure anchored');
+	}
       }
       // tic of game
       function gameTic( ) {
