@@ -12,12 +12,18 @@
     <h1>Tetris game</h1>
     <canvas id = 'canvas' width = '300px' height = '450px'>
     </canvas>
+    <button id="start">start</button>
+    <button id="stop">stop</button>
     <div id = "console">Console</div>
     <script>
       let cnsl = document.getElementById('console')
       function cnsllog(text){
 	      cnsl.textContent += `* ${text}`
       }
+      const startBtn = document.getElementById('start');
+      const stopBtn = document.getElementById('stop');
+      startBtn.addEventListener('click', startGame);
+      stopBtn.addEventListener('click', stopGame);
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       const elementSize = canvas.width / 10 ;
@@ -150,6 +156,7 @@
         drawField();
 	timer ++;
 	console.log('tic');
+	console.log(screenGrid);
 	cnsllog('tic');
       }
       // start of game
@@ -157,7 +164,9 @@
         screenGridDefine();
 	timerId = setInterval( gameTic, 1000);
       }
-      startGame();
+      function stopGame(){
+	clearInterval(timerId);
+      }
     </script>
   </body>
 </html>
