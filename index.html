@@ -33,6 +33,10 @@
       let timerId;
       let isFigure = false;
       let timer = 0;
+      const figures = {
+	dot: [ [1] ], 
+	cube: [ [1, 1],
+	        [1, 1] ] }
       //PixelProps object
       const PixelProps = {
 	x : 0,
@@ -81,8 +85,7 @@
       }
       // creating Figure
       function addFigure(){
-        const figures = {dot: [ [1] ], cube: [ [1, 1],[1, 1] ] }
-	const figure = figures.dot;
+	const figure = figures.cube;
 	let x = xInit;
 	let y = yInit;
 	
