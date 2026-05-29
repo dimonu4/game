@@ -27,6 +27,8 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       const elementSize = canvas.width / 10 ;
+      const xInit = 120;
+      const yInit = 0;
       let screenGrid = [];
       let timerId;
       let isFigure = false;
@@ -81,8 +83,6 @@
       function addFigure(){
         const figures = {dot: [ [1] ], cube: [ [1, 1],[1, 1] ] }
 	const figure = figures.dot;
-	const xInit = 120;
-	const yInit = 0;
 	let x = xInit;
 	let y = yInit;
 	
@@ -97,6 +97,7 @@
 	  x = xInit;
 	}
 	isFigure = true;
+	cnsllog("figure has been created")
       }
       //return next pixel
       function giveNextPixel(pixel, direction){
@@ -124,21 +125,25 @@
       //Anchor figure and set isFigure to false
       function anchorFigure(pixels){
         pixels.forEach(pixel => {
-	  pixel.isAnchored === true
+	  pixel.isAnchored = true
 	})
 	isFigure = false;
+	timer =-1;
         cnsllog('figure anchored');
       }
       function makeFallDown(){
 	const pixelsForMoving = screenGrid.filter((pixel)=> pixel.isFill === true && pixel.isAnchored === false);
 	const canFigureMove = checkFigureAbilityMove(pixelsForMoving, 'down');
-	console.log(canFigureMove)
-        if( canFigureMove ){
-	  moveToDirection(pixelsForMoving, 'down');
-	} else {
+	if( !canFigureMove && pixelsForMoving.find(pix => pix.x === xInit && pix.y === yInit)){
+	  gameOver();
+          cnsllog('gameover man')
+	} else if ( !canFigureMove){
            anchorFigure(pixelsForMoving);
+	} else {
+	  moveToDirection(pixelsForMoving, 'down');
 	}
       }
+      //checking is game over already
       // tic of game
       function gameTic( ) {
         if( !isFigure ) {
@@ -159,9 +164,13 @@
 	timerId = setInterval( gameTic, 1000);
       }
       function stopGame(){
+	timer =0;
 	screenGrid = [];
 	clearInterval(timerId);
 	isFigure = false;
+      }
+      function gameOver(){
+	clearInterval(timerId)
       }
     </script>
   </body>
