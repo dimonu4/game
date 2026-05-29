@@ -27,7 +27,7 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       const elementSize = canvas.width / 10 ;
-      const screenGrid = [];
+      let screenGrid = [];
       let timerId;
       let isFigure = false;
       let timer = 0;
@@ -55,7 +55,7 @@
       }
       //Draw all field
       function drawField(){
-	ctx.clearRect(0,0,canvas.widht, canvas.height);
+	ctx.clearRect(0,0,canvas.width, canvas.height);
 	let xInit = 0;
 	let yInit = 0;
         for(let pixel of screenGrid){
@@ -90,15 +90,12 @@
 	  for (let j=0; j< figure[i].length; j++){
 	    if( figure[i][j] ){
 	      fillPixel(x, y)
-		    cnsllog("pixel filled at: "+ x+'and y'+y)
 	    }
 	    x += elementSize;
 	  }
           y += elementSize;
 	  x = xInit;
 	}
-	console.log('figure added at : ');
-	cnsllog('figure added at: '  );
 	isFigure = true;
       }
       //return next pixel
@@ -108,15 +105,12 @@
       //Checking if figure can move to direction
       function checkFigureAbilityMove(pixels, direction){
 	let result = 0;
-	let nop=[]
 	pixels.forEach( pixel => {
           const nextPixel = giveNextPixel(pixel,'down');
 	  if(nextPixel === undefined || nextPixel.isAnchored === true ){
             result ++;
-	    nop.push(nextPixel===undefined)
           }
 	})
-	cnsllog('result is '+ result +'isanchor? '+ nop);
         return result > 0 ? false: true
       }
       //Move to direction
@@ -165,7 +159,9 @@
 	timerId = setInterval( gameTic, 1000);
       }
       function stopGame(){
+	screenGrid = [];
 	clearInterval(timerId);
+	isFigure = false;
       }
     </script>
   </body>
