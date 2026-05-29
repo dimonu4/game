@@ -119,6 +119,7 @@
       }
       //Move to direction
       function moveToDirection(pixels, direction){
+	  pixels.sort( (a,b)=> b.y - a.y )
           pixels.forEach(pixel =>{ 
 	    const nextPixel = giveNextPixel(pixel);
 	    nextPixel.isFill = true;
@@ -136,14 +137,15 @@
       }
       function makeFallDown(){
 	const pixelsForMoving = screenGrid.filter((pixel)=> pixel.isFill === true && pixel.isAnchored === false);
+	cnsllog('number of pixels: '+pixelsForMoving.length);
 	const canFigureMove = checkFigureAbilityMove(pixelsForMoving, 'down');
-	if( !canFigureMove && pixelsForMoving.find(pix => pix.x === xInit && pix.y === yInit)){
+	if( canFigureMove ){
+	  moveToDirection(pixelsForMoving, 'down');
+	} else if ( !canFigureMove && pixelsForMoving.find(pix => pix.x === xInit && pix.y === yInit)){
 	  gameOver();
           cnsllog('gameover man')
-	} else if ( !canFigureMove){
-           anchorFigure(pixelsForMoving);
 	} else {
-	  moveToDirection(pixelsForMoving, 'down');
+           anchorFigure(pixelsForMoving);
 	}
       }
       //checking is game over already
