@@ -33,10 +33,24 @@
       let timerId;
       let isFigure = false;
       let timer = 0;
-      const figures = {
-	dot: [ [1] ], 
-	cube: [ [1, 1],
-	        [1, 1] ] }
+      const figures = [
+        [ [1] ] , 
+	[ [1, 1],
+	  [1, 1] ] ,
+	[ [1, 1],
+	  [0, 1],
+	  [0, 1] ],
+	[ [0,1,0],
+	  [1,1,1] ],
+	[ [1,1,0],
+	  [0,1,1] ],
+	[ [1,1,1,1] ],
+	   
+	];
+      function getRandomFigure(){
+        const getRandomIndex = Math.floor( Math.random() * figures.length )
+	return figures[getRandomIndex]
+      }
       //PixelProps object
       const PixelProps = {
 	x : 0,
@@ -85,7 +99,7 @@
       }
       // creating Figure
       function addFigure(){
-	const figure = figures.cube;
+	const figure = getRandomFigure();
 	let x = xInit;
 	let y = yInit;
 	
