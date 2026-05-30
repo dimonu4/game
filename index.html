@@ -191,6 +191,19 @@
       function gameOver(){
 	clearInterval(timerId)
       }
+      function keyListener(event){
+	console.log(event);
+	switch(event.key){
+          case 'ArrowRight':
+            console.log('pressed right')
+	    break;
+	  case 'ArrowLeft':
+	    console.log('pressed left')
+	    break;
+	}
+      }
+      //iventListeners
+      document.addEventListener('keydown', keyListener)
     </script>
   </body>
 </html>
