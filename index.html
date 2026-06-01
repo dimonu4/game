@@ -98,6 +98,7 @@
       function fillPixel(xFill, yFill){
         const pixel = screenGrid.find( pix => pix.x == xFill && pix.y == yFill);
 	pixel.isFill = true;
+	pixel.underControl=true;
       }
       // creating Figure
       function addFigure(){
@@ -195,7 +196,8 @@
       //Anchor figure and set isFigure to false
       function anchorFigure(pixels){
         pixels.forEach(pixel => {
-	  pixel.isAnchored = true
+	  pixel.isAnchored = true;
+	  pixel.underControl=false;
 	})
 	isFigure = false;
 	timer =-1;
@@ -225,14 +227,15 @@
       //checking if lines can be destroy
       function deleteLines(){
 	let isDel = false;
+	let deletedLines =[];
         const anchoredPixels = getAnchoredPixels();
 	  for( let i=0; i<canvas.height; ){
 	    const line = anchoredPixels.filter(pixel=>pixel.y === i);
 	    if(line.length === canvas.width/elementSize){
+	      isDel = true;
+	      deletedLines.push(line);
 	      line.forEach(pixel=>{
 	      pixel.isFill= false;
-	      isDel = true;
-	      console.log(canvas.width/elementSize)
 	      })
 	    }
 	    i += elementSize;
@@ -240,7 +243,24 @@
 	if ( isDel ){
 	  anchoredPixels.forEach(pixel=>pixel.isAnchored = false)
 	  console.log("lines deleted")
+	  return deleteLines;
 	}
+      }
+      //falldown pixels
+      function fallDownPixels(pixels){
+        pixels.sort((a,b)=> b.y - a.y)
+	pixels.forEach(pixel=>{
+	  pixel.isFill = false;
+	  let nextPixel = giveNextPixel(pixel,'down');
+	  nextPixel.isFill = true;
+	})
+      }
+      //fall dawn field
+      function fallDownLines(lines){
+	lines.forEach(line=>{
+          const anchoredPixels = getAnchoredPixels();
+	  const pixelsAboveLine = anchoredPixels.filter(pixel=> pixel.y < line[0].y
+	  fallDownPixels(pixelsAboveLine)
       }
       // tic of game
       function gameTic( ) {
@@ -250,7 +270,12 @@
         if( timer > 0 ){
 	  makeFallDown();
 	}
-	deleteLines();
+	if( timer < 0){
+	  const lines = deleteLines();
+	  if( lines){
+	    fallDownLines(lines);
+	   }
+	}
         drawField();
 	timer ++;
 	cnsllog('tic');
