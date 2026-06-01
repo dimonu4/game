@@ -259,7 +259,7 @@
       function fallDownLines(lines){
 	lines.forEach(line=>{
           const anchoredPixels = getAnchoredPixels();
-	  const pixelsAboveLine = anchoredPixels.filter(pixel=> pixel.y < line[0].y)
+	  const pixelsAboveLine = anchoredPixels.filter(pixel=> pixel.y < line[0].y && pixel.underControl === false)
 	  fallDownPixels(pixelsAboveLine)
 	})
       }
