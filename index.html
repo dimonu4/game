@@ -232,14 +232,15 @@
 	      line.forEach(pixel=>{
 	      pixel.isFilled= false;
 	      isDel = true;
+	      console.log(canvas.width/elementSize)
 	      })
 	    }
 	    i += elementSize;
 	  }
 	if ( isDel ){
 	  anchoredPixels.forEach(pixel=>pixel.isAnchored = false)
+	  console.log("lines deleted")
 	}
-	console.log("lines deleted")
       }
       // tic of game
       function gameTic( ) {
