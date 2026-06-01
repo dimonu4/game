@@ -211,6 +211,10 @@
       function getAnchoredPixels(){
 	return screenGrid.filter((pixel)=> pixel.isAnchored === true);
       }
+     //return unanchored pixels
+      function getUnAnchoredPixels(){
+	return screenGrid.filter((pixel)=> pixel.isAnchored === false && pixel.isFill === true);
+      }
       //fall down every second
       function makeFallDown(){
 	const pixelsForMoving = getPixelsForMoving();
@@ -253,13 +257,14 @@
 	  pixel.isFill = false;
 	  let nextPixel = giveNextPixel(pixel,'down');
 	  nextPixel.isFill = true;
+	  nextPixel.isAnchored = true;
 	})
       }
       //fall dawn field
       function fallDownLines(lines){
 	lines.forEach(line=>{
-          const anchoredPixels = getAnchoredPixels();
-	  const pixelsAboveLine = anchoredPixels.filter(pixel=> pixel.y < line[0].y && pixel.underControl === false)
+          const unAnchoredPixels = getUnAnchoredPixels();
+	  const pixelsAboveLine = unAnchoredPixels.filter(pixel=> pixel.y < line[0].y && pixel.underControl === false)
 	  fallDownPixels(pixelsAboveLine)
 	})
       }
