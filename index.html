@@ -243,7 +243,7 @@
 	if ( isDel ){
 	  anchoredPixels.forEach(pixel=>pixel.isAnchored = false)
 	  console.log("lines deleted")
-	  return deleteLines;
+	  return deletedLines;
 	}
       }
       //falldown pixels
@@ -273,7 +273,7 @@
 	}
 	if( timer < 0){
 	  const lines = deleteLines();
-	  if( lines){
+	    if( lines.length >0){
 	    fallDownLines(lines);
 	   }
 	}
