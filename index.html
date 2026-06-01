@@ -175,7 +175,7 @@
 	  })
           break;
 	  case 'right':
-	  pixels.sort( (a,b)=> a.x - b.x )
+	  pixels.sort( (a,b)=> b.x - a.x )
           pixels.forEach(pixel =>{ 
 	    const nextPixel = giveNextPixel(pixel,'right');
 	    nextPixel.isFill = true;
@@ -183,7 +183,7 @@
 	  })
           break;
           case 'left':
-	  pixels.sort( (a,b)=> b.x - a.x )
+	  pixels.sort( (a,b)=> a.x - b.x )
           pixels.forEach(pixel =>{ 
 	    const nextPixel = giveNextPixel(pixel,'left');
 	    nextPixel.isFill = true;
