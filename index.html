@@ -205,6 +205,10 @@
       function getPixelsForMoving(){
         return screenGrid.filter((pixel)=> pixel.isFill === true && pixel.isAnchored === false);
       }
+      //return anchored pixels
+      function getAnchoredPixels(){
+	return screenGrid.filter((pixel)=> pixel.isAnchored === true);
+      }
       //fall down every second
       function makeFallDown(){
 	const pixelsForMoving = getPixelsForMoving();
@@ -218,7 +222,25 @@
            anchorFigure(pixelsForMoving);
 	}
       }
-      //checking is game over already
+      //checking if lines can be destroy
+      function deleteLines(){
+	let isDel = false;
+        const anchoredPixels = getAnchoredPixels();
+	  for( let i=0; i<canvas.height; ){
+	    const line = anchoredPixels.filter(pixel=>pixel.y === i);
+	    if(line.length() === canvas.width/elementSize){
+	      line.forEach(pixel=>{
+	      pixel.isFilled= false;
+	      isDel = true;
+	      })
+	    }
+	    i += elementSize;
+	  }
+	if ( isDel ){
+	  anchoredPixels.forEach(pixel=>pixel.isAnchored = false)
+	}
+	console.log("lines deleted")
+      }
       // tic of game
       function gameTic( ) {
         if( !isFigure ) {
@@ -227,6 +249,7 @@
         if( timer > 0 ){
 	  makeFallDown();
 	}
+	deleteLines();
         drawField();
 	timer ++;
 	cnsllog('tic');
