@@ -204,6 +204,7 @@
       //return pixels for moving
       function getPixelsForMoving(){
         return screenGrid.filter((pixel)=> pixel.isFill === true && pixel.isAnchored === false);
+      }
       //fall down every second
       function makeFallDown(){
 	const pixelsForMoving = getPixelsForMoving();
