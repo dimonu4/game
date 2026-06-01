@@ -228,7 +228,7 @@
         const anchoredPixels = getAnchoredPixels();
 	  for( let i=0; i<canvas.height; ){
 	    const line = anchoredPixels.filter(pixel=>pixel.y === i);
-	    if(line.length() === canvas.width/elementSize){
+	    if(line.length === canvas.width/elementSize){
 	      line.forEach(pixel=>{
 	      pixel.isFilled= false;
 	      isDel = true;
