@@ -249,26 +249,24 @@
      // controll
       function keyListener(event){
 	console.log(event);
+	const pixels = getPixelsForMoving();
 	switch(event.key){
           case 'ArrowRight':
-	    const pixels = getPixelsForMoving();
-	    const canFigureMove = checkFigureAbilityMove(pixels, 'right');
+	    let canFigureMove = checkFigureAbilityMove(pixels, 'right');
 	    if( canFigureMove ){
 	      moveToDirection(pixelsForMoving, 'right');
             }
             console.log('moved right')
 	    break;
 	  case 'ArrowLeft':
-	    const pixels = getPixelsForMoving();
-	    const canFigureMove = checkFigureAbilityMove(pixels, 'left');
+       	    let canFigureMove = checkFigureAbilityMove(pixels, 'left');
 	    if( canFigureMove ){
 	      moveToDirection(pixelsForMoving, 'left');
             }
             console.log('moved left')
 	    break;
           case 'ArrowDown':
-	    const pixels = getPixelsForMoving();
-	    const canFigureMove = checkFigureAbilityMove(pixels, 'down');
+	    let canFigureMove = checkFigureAbilityMove(pixels, 'down');
 	    if( canFigureMove ){
 	      moveToDirection(pixelsForMoving, 'down');
             }
