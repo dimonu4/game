@@ -33,6 +33,8 @@
       let timerId;
       let isFigure = false;
       let timer = 0;
+      let leftKeyPressed = false;
+      let rightKeyPressed = false;
       const figures = [
         [ [1] ] , 
 	[ [1, 1],
@@ -118,27 +120,77 @@
       }
       //return next pixel
       function giveNextPixel(pixel, direction){
-	return screenGrid.find( pix => pix.y == pixel.y + elementSize && pix.x == pixel.x)
+	switch(direction){
+	  case 'down':
+            return screenGrid.find( pix => pix.y == pixel.y + elementSize && pix.x == pixel.x)
+	    break;
+	  case 'right':
+            return screenGrid.find( pix => pix.y == pixel.y && pix.x == pixel.x + elementSize )
+	    break;
+	  case 'left':
+            return screenGrid.find( pix => pix.y == pixel.y + elementSize && pix.x == pixel.x - elementSize )
+	    break;
+        }
       }
       //Checking if figure can move to direction
       function checkFigureAbilityMove(pixels, direction){
 	let result = 0;
-	pixels.forEach( pixel => {
-          const nextPixel = giveNextPixel(pixel,'down');
-	  if(nextPixel === undefined || nextPixel.isAnchored === true ){
-            result ++;
-          }
-	})
+	switch (direction){
+	  case 'down':
+            pixels.forEach( pixel => {
+              const nextPixel = giveNextPixel(pixel, direction);
+	      if(nextPixel === undefined || nextPixel.isAnchored === true ){
+              result ++;
+              }
+	    })
+	  break;
+	  case 'right':
+	    pixels.forEach( pixel => {
+              const nextPixel = giveNextPixel(pixel, direction);
+	      if(nextPixel === undefined || nextPixel.isAnchored === true ){
+              result ++;
+	      }
+            })
+	  break;
+          case 'left':
+	    pixels.forEach( pixel => {
+              const nextPixel = giveNextPixel(pixel, direction);
+	      if(nextPixel === undefined || nextPixel.isAnchored === true ){
+              result ++;
+	      }
+            })
+	  break;
+        }	
         return result > 0 ? false: true
       }
       //Move to direction
       function moveToDirection(pixels, direction){
+	switch(direction){
+	  case 'down':
 	  pixels.sort( (a,b)=> b.y - a.y )
           pixels.forEach(pixel =>{ 
-	    const nextPixel = giveNextPixel(pixel);
+	    const nextPixel = giveNextPixel(pixel,'down');
 	    nextPixel.isFill = true;
 	    pixel.isFill = false;
 	  })
+          break;
+	  case 'right':
+	  pixels.sort( (a,b)=> a.x - b.x )
+          pixels.forEach(pixel =>{ 
+	    const nextPixel = giveNextPixel(pixel,'right');
+	    nextPixel.isFill = true;
+	    pixel.isFill = false;
+	  })
+          break;
+          case 'left':
+	  pixels.sort( (a,b)=> b.x - a.x )
+          pixels.forEach(pixel =>{ 
+	    const nextPixel = giveNextPixel(pixel,'left');
+	    nextPixel.isFill = true;
+	    pixel.isFill = false;
+	  })
+          break;
+	}
       }
       //Anchor figure and set isFigure to false
       function anchorFigure(pixels){
@@ -149,9 +201,12 @@
 	timer =-1;
         cnsllog('figure anchored');
       }
+      //return pixels for moving
+      function getPixelsForMoving(){
+        return screenGrid.filter((pixel)=> pixel.isFill === true && pixel.isAnchored === false);
+      //fall down every second
       function makeFallDown(){
-	const pixelsForMoving = screenGrid.filter((pixel)=> pixel.isFill === true && pixel.isAnchored === false);
-	cnsllog('number of pixels: '+pixelsForMoving.length);
+	const pixelsForMoving = getPixelsForMoving();
 	const canFigureMove = checkFigureAbilityMove(pixelsForMoving, 'down');
 	if( canFigureMove ){
 	  moveToDirection(pixelsForMoving, 'down');
@@ -173,8 +228,6 @@
 	}
         drawField();
 	timer ++;
-	console.log('tic');
-	console.log(screenGrid);
 	cnsllog('tic');
       }
       // start of game
@@ -182,23 +235,44 @@
         screenGridDefine();
 	timerId = setInterval( gameTic, 1000);
       }
+     // stop button handle
       function stopGame(){
 	timer =0;
 	screenGrid = [];
 	clearInterval(timerId);
 	isFigure = false;
       }
+     // game over
       function gameOver(){
 	clearInterval(timerId)
       }
+     // controll
       function keyListener(event){
 	console.log(event);
 	switch(event.key){
           case 'ArrowRight':
-            console.log('pressed right')
+	    const pixels = getPixelsForMoving();
+	    const canFigureMove = checkFigureAbilityMove(pixels, 'right');
+	    if( canFigureMove ){
+	      moveToDirection(pixelsForMoving, 'right');
+            }
+            console.log('moved right')
 	    break;
 	  case 'ArrowLeft':
-	    console.log('pressed left')
+	    const pixels = getPixelsForMoving();
+	    const canFigureMove = checkFigureAbilityMove(pixels, 'left');
+	    if( canFigureMove ){
+	      moveToDirection(pixelsForMoving, 'left');
+            }
+            console.log('moved left')
+	    break;
+          case 'ArrowDown':
+	    const pixels = getPixelsForMoving();
+	    const canFigureMove = checkFigureAbilityMove(pixels, 'down');
+	    if( canFigureMove ){
+	      moveToDirection(pixelsForMoving, 'down');
+            }
+            console.log('moved down')
 	    break;
 	}
       }
