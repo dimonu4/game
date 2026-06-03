@@ -36,6 +36,7 @@
       let leftKeyPressed = false;
       let rightKeyPressed = false;
       let figureOrientation = 'up';
+      let currentFigureName;
       const figures = [
 	{ name: 'dot',
 	  up: [ [1] ],
@@ -182,7 +183,8 @@
       }
       // creating Figure
       function addFigure(x=xInit, y=yInit, orientation='up'){
-	const figureObj = getRandomFigure();
+	const figureObj = figures.find(fig=>fig.name===currentFigureName) || getRandomFigure();
+	currentFigureName = figureObj.name;
 	const figure = figureObj[orientation];
         for (let i = 0; i < figure.length; i++){
 	  for (let j=0; j< figure[i].length; j++){
@@ -250,6 +252,8 @@
           pixels.forEach(pixel =>{ 
 	    const nextPixel = giveNextPixel(pixel,'down');
 	    nextPixel.isFill = true;
+            nextPixel.underControl = true;
+	    pixel.underControl = false;
 	    pixel.isFill = false;
 	  })
           break;
@@ -258,6 +262,8 @@
           pixels.forEach(pixel =>{ 
 	    const nextPixel = giveNextPixel(pixel,'right');
 	    nextPixel.isFill = true;
+            nextPixel.underControl = true;
+	    pixel.underControl = false;
 	    pixel.isFill = false;
 	  })
           break;
@@ -266,6 +272,8 @@
           pixels.forEach(pixel =>{ 
 	    const nextPixel = giveNextPixel(pixel,'left');
 	    nextPixel.isFill = true;
+            nextPixel.underControl = true;
+	    pixel.underControl = false;
 	    pixel.isFill = false;
 	  })
           break;
@@ -280,6 +288,7 @@
 	isFigure = false;
 	timer =-1;
         cnsllog('figure anchored');
+	currentFigureName=undefined;
       }
       //return pixels for moving
       function getPixelsForMoving(){
@@ -354,9 +363,10 @@
       function rotateFigure(){
 	const directions = ['up', 'left', 'right', 'down'];
 	const figuresPixels = getFigure()
-	const currentDirectionIndex = directions.indexOf(figurreOrientation);
-	const nextDirectionIndex = currentDirectionIndex === directions.length()-1?0:currentDirectionIndex+1;
+	const currentDirectionIndex = directions.indexOf(figureOrientation);
+	const nextDirectionIndex = currentDirectionIndex === directions.length-1?0:currentDirectionIndex+1;
 	const nextDirection = directions[nextDirectionIndex];
+	figureOrientation = nextDirection;
 	figuresPixels.filter((a,b)=>a.y-b.y);
 	figuresPixels.filter((a,b)=>a.x-b.x);
         const xF = figuresPixels[0].x;
@@ -428,7 +438,7 @@
             }
             console.log('moved down')
 	    break;
-	  case 'Space' :
+	  case ' ' :
 	    rotateFigure();
 	}
       }
