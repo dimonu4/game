@@ -36,22 +36,101 @@
       let leftKeyPressed = false;
       let rightKeyPressed = false;
       const figures = [
-        [ [1] ] , 
-	[ [1, 1],
-	  [1, 1] ] ,
-	[ [1, 1],
-	  [0, 1],
-	  [0, 1] ],
-	[ [0,1,0],
-	  [1,1,1] ],
-	[ [1,1,0],
-	  [0,1,1] ],
-	[ [1,1,1,1] ],
+	{ name: 'dot',
+	  up: [ [1] ],
+          left: [ [1] ],
+	  down: [ [1] ],
+          right: [ [1] ]
+	},
+	{ name: 'cube',
+	  up: [ [1, 1],
+	        [1, 1] ],
+          left: [ [1, 1],
+	          [1, 1] ],
+	  down: [ [1, 1],
+	          [1, 1] ],
+          right: [ [1, 1],
+	           [1, 1] ]
+	},
+        { name: 'letGL',
+	  up: [ [1, 1],
+	        [0, 1],
+     	        [0, 1] ],
+          left: [ [1, 1, 1],
+ 	          [1, 0, 0] ],
+	  down: [ [1, 0],
+	          [1, 0],
+     	          [1, 1] ],
+          right: [ [0, 0, 1],
+ 	           [1, 1, 1] ],
+	},
+	{ name: 'letGR',
+	  up: [ [1, 1],
+	        [1, 0],
+     	        [1, 0] ],
+          left: [ [1, 0, 0],
+ 	          [1, 1, 1] ],
+	  down: [ [0, 1],
+	          [0, 1],
+     	          [1, 1] ],
+          right: [ [1, 1, 1],
+ 	           [0, 0, 1] ],
+	},
+	{ name: 'letT',
+	  up: [ [0, 1, 0],
+	        [1, 1, 1] ],
+          left: [ [0, 1],
+ 	          [1, 1]
+	          [0, 1] ],
+	  down: [ [1, 1, 1],
+	          [0, 1, 0] ],
+          right: [ [1, 0],
+ 	           [1, 1]
+	           [1, 0] ],
+	},
+	{ name: 'lightningL',
+	  up: [ [1, 1, 0],
+	        [0, 1, 1] ],
+          left: [ [0, 1],
+ 	          [1, 1]
+	          [1, 0] ],
+	  down: [ [1, 1, 0],
+	          [0, 1, 1] ],
+          right: [ [0, 1],
+ 	           [1, 1]
+	           [1, 0] ],
+	},
+	{ name: 'lightningR',
+	  up: [ [0, 1, 1],
+	        [1, 1, 0] ],
+          left: [ [1, 0],
+ 	          [1, 1]
+	          [0, 1] ],
+	  down: [ [0, 1, 1],
+	          [1, 1, 0] ],
+          right: [ [1, 0],
+ 	           [1, 1]
+	           [0, 1] ],
+	},
+	{ name: 'stick',
+	  up: [ [1],
+		[1],
+		[1],
+		[1] ],
+	  left: [ [1,1,1,1] ],
+	  down: [ [1],
+	  	  [1],
+		  [1],
+		  [1] ],
+	  right: [ [1,1,1,1] ],
 	   
 	];
+      const figureNames = [];
+      figures.forEach(figure=>figuresNames.push(figure.name);
+      //get object of random figure
       function getRandomFigure(){
         const getRandomIndex = Math.floor( Math.random() * figures.length )
-	return figures[getRandomIndex]
+	return figures.find(item=>item.name === figuresNames[getRandomIndex];
       }
       //PixelProps object
       const PixelProps = {
@@ -101,11 +180,9 @@
 	pixel.underControl=true;
       }
       // creating Figure
-      function addFigure(){
-	const figure = getRandomFigure();
-	let x = xInit;
-	let y = yInit;
-	
+      function addFigure(x=xInit, y=yInit, orientation='up'){
+	const figureObj = getRandomFigure();
+	const figure = figureObj[orientation];
         for (let i = 0; i < figure.length; i++){
 	  for (let j=0; j< figure[i].length; j++){
 	    if( figure[i][j] ){
