@@ -333,6 +333,13 @@
       }
       //EventListeners
       document.addEventListener('keydown', keyListener)
+      document.addEventListener('pointerdown', (e)=>
+	const keyE = e.clientX < window.innerWidth/2?"ArrowLeft":"ArrowRight";
+        const event = new KeyboardEvent("keydown",{
+	  key: keyE
+	})
+	document.dispatchEvent(event)
+	      cnsllog(e.clientX + 'of' + window.innerWidth))
     </script>
   </body>
 </html>
