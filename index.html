@@ -161,8 +161,6 @@
       //Draw all field
       function drawField(){
 	ctx.clearRect(0,0,canvas.width, canvas.height);
-	let xInit = 0;
-	let yInit = 0;
         for(let pixel of screenGrid){
 	      if( pixel.isFill ){
 		drawEl(pixel.x, pixel.y);
@@ -200,6 +198,7 @@
 	  x = startX;
 	}
 	isFigure = true;
+//	drawField();
 	cnsllog("figure has been created")
       }
       //return next pixel
@@ -449,6 +448,7 @@
 	}
       }
       //EventListeners
+      document.addEventlistener('dblclick', (e)=>e.preventDefault())
       document.addEventListener('keydown', keyListener)
       document.addEventListener('pointerdown', (e)=>{
 	const keyE = e.clientX < window.innerWidth/2?"ArrowLeft":"ArrowRight";
