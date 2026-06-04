@@ -294,6 +294,7 @@
 	timer =-1;
         cnsllog('figure anchored');
 	currentFigureName=undefined;
+	figureOrientation = 'up';
       }
       //return pixels for moving
       function getPixelsForMoving(){
@@ -404,7 +405,7 @@
       function startGame(){
         screenGridDefine();
 	timerId = setInterval( gameTic, 1000);
-	btnStart.blur();
+	startBtn.blur();
       }
      // stop button handle
       function stopGame(){
@@ -412,7 +413,7 @@
 	screenGrid = [];
 	clearInterval(timerId);
 	isFigure = false;
-	btnStop.blur();
+	stopBtn.blur();
       }
      // game over
       function gameOver(){
