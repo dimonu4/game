@@ -41,91 +41,91 @@
       let currentFigureName;
       const figures = [
 	{ name: 'dot',
-	  up: [ [1] ],
+	  up:   [ [1] ],
           left: [ [1] ],
 	  down: [ [1] ],
-          right: [ [1] ]
+          right:[ [1] ]
 	},
 	{ name: 'cube',
-	  up: [ [1, 1],
-	        [1, 1] ],
-          left: [ [1, 1],
-	          [1, 1] ],
-	  down: [ [1, 1],
-	          [1, 1] ],
+	  up:    [ [1, 1],
+	           [1, 1] ],
+          left:  [ [1, 1],
+	           [1, 1] ],
+	  down:  [ [1, 1],
+	           [1, 1] ],
           right: [ [1, 1],
 	           [1, 1] ]
 	},
         { name: 'letGL',
-	  up: [ [1, 1],
-	        [0, 1],
-     	        [0, 1] ],
-          left: [ [1, 1, 1],
- 	          [1, 0, 0] ],
-	  down: [ [1, 0],
-	          [1, 0],
-     	          [1, 1] ],
+	  up:    [ [1, 1],
+	           [0, 1],
+     	           [0, 1] ],
+          left:  [ [1, 1, 1],
+ 	           [1, 0, 0] ],
+	  down:  [ [1, 0],
+	           [1, 0],
+     	           [1, 1] ],
           right: [ [0, 0, 1],
  	           [1, 1, 1] ],
 	},
 	{ name: 'letGR',
-	  up: [ [1, 1],
-	        [1, 0],
-     	        [1, 0] ],
-          left: [ [1, 0, 0],
- 	          [1, 1, 1] ],
-	  down: [ [0, 1],
-	          [0, 1],
-     	          [1, 1] ],
-          right: [ [1, 1, 1],
- 	           [0, 0, 1] ],
+	  up:     [ [1, 1],
+	            [1, 0],
+     	            [1, 0] ],
+          left:   [ [1, 0, 0],
+ 	            [1, 1, 1] ],
+	  down:   [ [0, 1],
+	            [0, 1],
+     	            [1, 1] ],
+          right:  [ [1, 1, 1],
+ 	            [0, 0, 1] ],
 	},
 	{ name: 'letT',
-	  up: [ [0, 1, 0],
-	        [1, 1, 1] ],
-          left: [ [0, 1],
- 	          [1, 1],
-	          [0, 1] ],
-	  down: [ [1, 1, 1],
-	          [0, 1, 0] ],
+	  up:    [ [0, 1, 0],
+	           [1, 1, 1] ],
+          left:  [ [0, 1],
+ 	           [1, 1],
+	           [0, 1] ],
+	  down:  [ [1, 1, 1],
+	           [0, 1, 0] ],
           right: [ [1, 0],
  	           [1, 1],
 	           [1, 0] ],
 	},
 	{ name: 'lightningL',
-	  up: [ [1, 1, 0],
-	        [0, 1, 1] ],
-          left: [ [0, 1],
- 	          [1, 1],
-	          [1, 0] ],
-	  down: [ [1, 1, 0],
-	          [0, 1, 1] ],
+	  up:    [ [1, 1, 0],
+	           [0, 1, 1] ],
+          left:  [ [0, 1],
+ 	           [1, 1],
+	           [1, 0] ],
+	  down:  [ [1, 1, 0],
+	           [0, 1, 1] ],
           right: [ [0, 1],
  	           [1, 1],
 	           [1, 0] ],
 	},
 	{ name: 'lightningR',
-	  up: [ [0, 1, 1],
-	        [1, 1, 0] ],
-          left: [ [1, 0],
- 	          [1, 1],
-	          [0, 1] ],
-	  down: [ [0, 1, 1],
-	          [1, 1, 0] ],
+	  up:    [ [0, 1, 1],
+	           [1, 1, 0] ],
+          left:  [ [1, 0],
+ 	           [1, 1],
+	         [0, 1] ],
+	  down:  [ [0, 1, 1],
+	           [1, 1, 0] ],
           right: [ [1, 0],
  	           [1, 1],
 	           [0, 1] ],
 	},
 	{ name: 'stick',
-	  up: [ [1],
-		[1],
-		[1],
-		[1] ],
-	  left: [ [1,1,1,1] ],
-	  down: [ [1],
-	  	  [1],
-		  [1],
-		  [1] ],
+	  up:    [ [1],
+		   [1],
+		   [1],
+		   [1] ],
+	  left:  [ [1,1,1,1] ],
+	  down:  [ [1],
+	  	   [1],
+		   [1],
+		   [1] ],
 	  right: [ [1,1,1,1] ],
         } 
 	];
@@ -198,7 +198,7 @@
 	  x = startX;
 	}
 	isFigure = true;
-//	drawField();
+	drawField();
 	cnsllog("figure has been created")
       }
       //return next pixel
@@ -257,6 +257,7 @@
             nextPixel.underControl = true;
 	    pixel.underControl = false;
 	    pixel.isFill = false;
+	    drawField();
 	  })
           break;
 	  case 'right':
@@ -267,6 +268,7 @@
             nextPixel.underControl = true;
 	    pixel.underControl = false;
 	    pixel.isFill = false;
+	    drawField();
 	  })
           break;
           case 'left':
@@ -277,6 +279,7 @@
             nextPixel.underControl = true;
 	    pixel.underControl = false;
 	    pixel.isFill = false;
+	    drawField();
 	  })
           break;
 	}
@@ -448,7 +451,7 @@
 	}
       }
       //EventListeners
-      document.addEventlistener('dblclick', (e)=>e.preventDefault())
+      document.addEventListener('dblclick', (e)=>e.preventDefault())
       document.addEventListener('keydown', keyListener)
       document.addEventListener('pointerdown', (e)=>{
 	const keyE = e.clientX < window.innerWidth/2?"ArrowLeft":"ArrowRight";
