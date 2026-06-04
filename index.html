@@ -14,6 +14,7 @@
     </canvas>
     <button id="start">start</button>
     <button id="stop">stop</button>
+    <button id='rotate'width='150px'height='150px'>rotate</button>
     <div id = "console">Console</div>
     <script>
       let cnsl = document.getElementById('console')
@@ -22,6 +23,7 @@
       }
       const startBtn = document.getElementById('start');
       const stopBtn = document.getElementById('stop');
+      const rotateBtn = document.getElementById('rotate');
       startBtn.addEventListener('click', startGame);
       stopBtn.addEventListener('click', stopGame);
       const canvas = document.getElementById('canvas');
@@ -399,6 +401,7 @@
       function startGame(){
         screenGridDefine();
 	timerId = setInterval( gameTic, 1000);
+	btnStart.blur();
       }
      // stop button handle
       function stopGame(){
@@ -406,6 +409,7 @@
 	screenGrid = [];
 	clearInterval(timerId);
 	isFigure = false;
+	btnStop.blur();
       }
      // game over
       function gameOver(){
@@ -450,9 +454,13 @@
 	  key: keyE
 	});
 	document.dispatchEvent(event)
-	  cnsllog(e.clientX + 'of' + window.innerWidth)
       })
-      
+      rotateBtn.addEventListener('click', ()=>{
+	const event = new KeyboardEvent("keydown",{
+	  key: ' '
+	});
+	document.dispatchEvent(event)
+      });
     </script>
   </body>
 </html>
