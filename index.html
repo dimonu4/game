@@ -185,18 +185,19 @@
       }
       // creating Figure
       function addFigure(x=xInit, y=yInit, orientation='up'){
+	let startX =x
 	const figureObj = figures.find(fig=>fig.name===currentFigureName) || getRandomFigure();
 	currentFigureName = figureObj.name;
 	const figure = figureObj[orientation];
         for (let i = 0; i < figure.length; i++){
 	  for (let j=0; j< figure[i].length; j++){
-	    if( figure[i][j] ){
+	    if( figure[i][j] === 1){
 	      fillPixel(x, y)
 	    }
 	    x += elementSize;
 	  }
           y += elementSize;
-	  x = xInit;
+	  x = Startx;
 	}
 	isFigure = true;
 	cnsllog("figure has been created")
@@ -363,10 +364,10 @@
       }
       //rotating Figure
       function rotateFigure(){
-	const orientations = ['up', 'left', 'right', 'down'];
-	const figuresPixels = getFigure()
+	const orientations = ['up', 'left', 'down', 'right'];
+	const figuresPixels = getFigure();
 	const currentOrientationIndex = orientations.indexOf(figureOrientation);
-	const nextOrientationIndex = currentOrientationIndex === orientations.length-1?0:currentOrientationIndex++;
+	const nextOrientationIndex = currentOrientationIndex === orientations.length-1?0:currentOrientationIndex+1;
 	const nextOrientation = orientations[nextOrientationIndex];
 	figureOrientation = nextOrientation;
 	figuresPixels.filter((a,b)=>a.y-b.y);
@@ -377,7 +378,6 @@
           pixel.isFill = false;
 	  pixel.underControl = false
 	});
-	cnsllog(figureOrientation)
 	addFigure(xF, yF, nextOrientation);
       }
       // tic of game
@@ -444,6 +444,7 @@
             console.log('moved down')
 	    break;
 	  case ' ' :
+
 	    rotateFigure();
 	}
       }
