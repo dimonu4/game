@@ -84,36 +84,36 @@
 	  up: [ [0, 1, 0],
 	        [1, 1, 1] ],
           left: [ [0, 1],
- 	          [1, 1]
+ 	          [1, 1],
 	          [0, 1] ],
 	  down: [ [1, 1, 1],
 	          [0, 1, 0] ],
           right: [ [1, 0],
- 	           [1, 1]
+ 	           [1, 1],
 	           [1, 0] ],
 	},
 	{ name: 'lightningL',
 	  up: [ [1, 1, 0],
 	        [0, 1, 1] ],
           left: [ [0, 1],
- 	          [1, 1]
+ 	          [1, 1],
 	          [1, 0] ],
 	  down: [ [1, 1, 0],
 	          [0, 1, 1] ],
           right: [ [0, 1],
- 	           [1, 1]
+ 	           [1, 1],
 	           [1, 0] ],
 	},
 	{ name: 'lightningR',
 	  up: [ [0, 1, 1],
 	        [1, 1, 0] ],
           left: [ [1, 0],
- 	          [1, 1]
+ 	          [1, 1],
 	          [0, 1] ],
 	  down: [ [0, 1, 1],
 	          [1, 1, 0] ],
           right: [ [1, 0],
- 	           [1, 1]
+ 	           [1, 1],
 	           [0, 1] ],
 	},
 	{ name: 'stick',
@@ -363,12 +363,12 @@
       }
       //rotating Figure
       function rotateFigure(){
-	const directions = ['up', 'left', 'right', 'down'];
+	const orientations = ['up', 'left', 'right', 'down'];
 	const figuresPixels = getFigure()
-	const currentDirectionIndex = directions.indexOf(figureOrientation);
-	const nextDirectionIndex = currentDirectionIndex === directions.length-1?0:currentDirectionIndex+1;
-	const nextDirection = directions[nextDirectionIndex];
-	figureOrientation = nextDirection;
+	const currentOrientationIndex = orientations.indexOf(figureOrientation);
+	const nextOrientationIndex = currentOrientationIndex === orientations.length-1?0:currentOrientationIndex++;
+	const nextOrientation = orientations[nextOrientationIndex];
+	figureOrientation = nextOrientation;
 	figuresPixels.filter((a,b)=>a.y-b.y);
 	figuresPixels.filter((a,b)=>a.x-b.x);
         const xF = figuresPixels[0].x;
@@ -377,7 +377,8 @@
           pixel.isFill = false;
 	  pixel.underControl = false
 	});
-	addFigure(xF, yF, nextDirection);
+	cnsllog(figureOrientation)
+	addFigure(xF, yF, nextOrientation);
       }
       // tic of game
       function gameTic( ) {
