@@ -185,7 +185,6 @@
       function addFigure(x=xInit, y=yInit, orientation='up'){
 	let startX =x
 	const figureObj = figures.find(fig=>fig.name===currentFigureName) || getRandomFigure();
-	cnsllog(figureObj[orientation]);
 	currentFigureName = figureObj.name;
 	const figure = figureObj[orientation];
         for (let i = 0; i < figure.length; i++){
