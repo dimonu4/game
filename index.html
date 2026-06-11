@@ -372,8 +372,8 @@
 	const nextOrientationIndex = currentOrientationIndex === orientations.length-1?0:currentOrientationIndex+1;
 	const nextOrientation = orientations[nextOrientationIndex];
 	figureOrientation = nextOrientation;
-	figuresPixels.filter((a,b)=>a.y-b.y);
 	figuresPixels.filter((a,b)=>a.x-b.x);
+	figuresPixels.filter((a,b)=>a.y-b.y);
         const xF = figuresPixels[0].x;
 	const yF = figuresPixels[0].y;
 	figuresPixels.forEach(pixel=>{
