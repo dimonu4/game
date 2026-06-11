@@ -367,14 +367,14 @@
       //rotating Figure
       function rotateFigure(){
 	const orientations = ['up', 'left', 'down', 'right'];
-	const figuresPixels = getFigure();
+	const figuresPixels = getFigure();//array of pixels
 	const currentOrientationIndex = orientations.indexOf(figureOrientation);
 	const nextOrientationIndex = currentOrientationIndex === orientations.length-1?0:currentOrientationIndex+1;
 	const nextOrientation = orientations[nextOrientationIndex];
 	figureOrientation = nextOrientation;
 	figuresPixels.filter((a,b)=>a.x-b.x);
-	figuresPixels.filter((a,b)=>a.y-b.y);
         const xF = figuresPixels[0].x;
+	figuresPixels.filter((a,b)=>a.y-b.y);
 	const yF = figuresPixels[0].y;
 	figuresPixels.forEach(pixel=>{
           pixel.isFill = false;
