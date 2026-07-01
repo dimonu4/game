@@ -186,6 +186,11 @@
 	let findPixel = screenGrid.find(pix=>pix.x==fx&&pix.y==fy);
         return findPixel.isFill
       }
+      // if pixel is part of field
+      function isPixelInField(fx, fy){
+	const pixel = screenGrid.find(pix=>pix.x==fx&&pix.y==fy);
+	return typeof pixel==="object"?true:false;
+      }
       // check space for figure
       function isSpaceForFigure(figure, x, y){
 	let count =0;
@@ -193,7 +198,7 @@
 	let currentY = y;
 	for( i=0; i<figure.length;i++){
 	  for( j=0; j<figure[i].length;j++ ){
-	    if( figure[i][j]==1 && isPixelFill(currentX, currentY )){
+	    if( figure[i][j]==1 && isPixelFill(currentX, currentY && isPixelInField(currentX, currentY))){
               count ++;
 	    }
 	    currentX+= elementSize;
