@@ -181,12 +181,38 @@
 	pixel.isFill = true;
 	pixel.underControl=true;
       }
+      // return true when pixel is filled
+      function isPixelFill(fx,fy){
+	let findPixel = screenGrid.find(pix=>pix.x==fx&&pix.y==fy);
+        return findPixel.isFill
+      }
+      // check space for figure
+      function isSpaceForFigure(figure, x, y){
+	let count =0;
+	let currentX = x;
+	let currentY = y;
+	for( i=0; i<figure.length;++){
+	  for( j=0; j<figure[i].length;j++ ){
+	    if( figure[i][j]==1 && isPixelFill(currentX, currentY )){
+              count ++;
+	    }
+	    currentX+= elementSize;
+	  }
+	  currentY += elementSize;
+	  currentX =x;
+	}
+	count<1?return true:return false;
+      }
+
       // creating Figure
       function addFigure(x=xInit, y=yInit, orientation='up'){
 	let startX =x
 	const figureObj = figures.find(fig=>fig.name===currentFigureName) || getRandomFigure();
 	currentFigureName = figureObj.name;
-	const figure = figureObj[orientation];
+	const figure = figureObj[orientation];//array 1or0
+	if( !isSpaceForFigure(figure, x, y) ){
+	     cnsllog("there is no space");
+	};
         for (let i = 0; i < figure.length; i++){
 	  for (let j=0; j< figure[i].length; j++){
 	    if( figure[i][j] === 1){
