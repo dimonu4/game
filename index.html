@@ -198,7 +198,7 @@
 	let currentY = y;
 	for( i=0; i<figure.length;i++){
 	  for( j=0; j<figure[i].length;j++ ){
-	    if( figure[i][j]==1 && isPixelFill(currentX, currentY && isPixelInField(currentX, currentY))){
+	    if( figure[i][j]==1 && isPixelInField(currentX, currentY) && isPixelFill(currentX, currentY)){
               count ++;
 	    }
 	    currentX+= elementSize;
