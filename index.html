@@ -38,6 +38,7 @@
       let leftKeyPressed = false;
       let rightKeyPressed = false;
       let figureOrientation = 'up';
+      let currentFigure;
       let currentFigureName;
       const figures = [
 	{ name: 'dot',
@@ -198,7 +199,7 @@
 	let currentY = y;
 	for( i=0; i<figure.length;i++){
 	  for( j=0; j<figure[i].length;j++ ){
-	    if( figure[i][j]==1 && isPixelInField(currentX, currentY) && isPixelFill(currentX, currentY)){
+	    if( figure[i][j]==1 && !isPixelInField(currentX, currentY) && !isPixelFill(currentX, currentY)){
               count ++;
 	    }
 	    currentX+= elementSize;
@@ -215,6 +216,7 @@
 	const figureObj = figures.find(fig=>fig.name===currentFigureName) || getRandomFigure();
 	currentFigureName = figureObj.name;
 	const figure = figureObj[orientation];//array 1or0
+	currentFigure = figure;
 
         for (let i = 0; i < figure.length; i++){
 	  for (let j=0; j< figure[i].length; j++){
@@ -395,23 +397,21 @@
       }
       //rotating Figure
       function rotateFigure(){
-	if( !isSpaceForFigure(figure, x, y) ){
-	     cnsllog("there is no space");
-	};
-	if ( ){
-	  break
+	const figuresPixels = getFigure();//array of pixels
+        const xF = figuresPixels[0].x;
+	const yF = figuresPixels[0].y;
+	if ( !isSpaceForFigure(currentFigure, xF, yF) ){ //need to be next Figure for checking not current
+	  cnsllog("there is no space");
+	  return
 	}
 
 	const orientations = ['up', 'left', 'down', 'right'];
-	const figuresPixels = getFigure();//array of pixels
 	const currentOrientationIndex = orientations.indexOf(figureOrientation);
 	const nextOrientationIndex = currentOrientationIndex === orientations.length-1?0:currentOrientationIndex+1;
 	const nextOrientation = orientations[nextOrientationIndex];
 	figureOrientation = nextOrientation;
 	figuresPixels.filter((a,b)=>a.x-b.x);
-        const xF = figuresPixels[0].x;
 	figuresPixels.filter((a,b)=>a.y-b.y);
-	const yF = figuresPixels[0].y;
 	figuresPixels.forEach(pixel=>{
           pixel.isFill = false;
 	  pixel.underControl = false
