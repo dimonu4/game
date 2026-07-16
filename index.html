@@ -215,9 +215,7 @@
 	const figureObj = figures.find(fig=>fig.name===currentFigureName) || getRandomFigure();
 	currentFigureName = figureObj.name;
 	const figure = figureObj[orientation];//array 1or0
-	if( !isSpaceForFigure(figure, x, y) ){
-	     cnsllog("there is no space");
-	};
+
         for (let i = 0; i < figure.length; i++){
 	  for (let j=0; j< figure[i].length; j++){
 	    if( figure[i][j] === 1){
@@ -397,6 +395,13 @@
       }
       //rotating Figure
       function rotateFigure(){
+	if( !isSpaceForFigure(figure, x, y) ){
+	     cnsllog("there is no space");
+	};
+	if ( ){
+	  break
+	}
+
 	const orientations = ['up', 'left', 'down', 'right'];
 	const figuresPixels = getFigure();//array of pixels
 	const currentOrientationIndex = orientations.indexOf(figureOrientation);
