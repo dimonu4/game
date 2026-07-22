@@ -210,7 +210,7 @@
 	return count<1? true: false;
       }
 
-      // creating Figure
+      // creating Figure initial, or by rotating
       function addFigure(x=xInit, y=yInit, orientation='up'){
 	let startX =x
 	const figureObj = figures.find(fig=>fig.name===currentFigureName) || getRandomFigure();
@@ -397,19 +397,21 @@
       }
       //rotating Figure
       function rotateFigure(){
-	const figuresPixels = getFigure();//array of pixels
+	const figuresPixels = getFigure();//array of pixels, not array from 1 and 0
         const xF = figuresPixels[0].x;
 	const yF = figuresPixels[0].y;
-	if ( !isSpaceForFigure(currentFigure, xF, yF) ){ //need to be next Figure for checking not current
-	  cnsllog("there is no space");
-	  return
-	}
-
 	const orientations = ['up', 'left', 'down', 'right'];
 	const currentOrientationIndex = orientations.indexOf(figureOrientation);
 	const nextOrientationIndex = currentOrientationIndex === orientations.length-1?0:currentOrientationIndex+1;
 	const nextOrientation = orientations[nextOrientationIndex];
-	figureOrientation = nextOrientation;
+	const figureObj = figures.find(fig=>fig.name===currentFigureName) 
+	const nextFigureOrientation = figureObj[nextOrientation];
+
+	  if ( !isSpaceForFigure(nextFigureOrientation, xF, yF) ){ //it must be next orientatiFigure
+	  console.log("there is no space");
+	  return
+	  }
+        figureOrientation = nextOrientation;
 	figuresPixels.filter((a,b)=>a.x-b.x);
 	figuresPixels.filter((a,b)=>a.y-b.y);
 	figuresPixels.forEach(pixel=>{
